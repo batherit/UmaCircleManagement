@@ -11,12 +11,44 @@ using CircleMemberDataHistoryList = vector<CircleMemberDataHistory>;
 using CircleMemberDataListWithDate = pair<FileDate, CircleMemberDataList>;
 using CircleMemberDataMapWithDate = map<FileDate, CircleMemberDataList>;
 
+struct CmdBase
+{
+public:
+	virtual bool Process() PURE;
+};
+
+struct CmdChangeCircleMemberName : public CmdBase
+{
+public:
+	CmdChangeCircleMemberName(const string& InSrcName, const string& InDestName)
+		:
+		SrcName(InSrcName),
+		DestName(InDestName)
+	{
+
+	}
+
+	virtual bool Process() override;
+
+private:
+	string SrcName;
+	string DestName;
+};
+
 class CCircleMemberDatabase
 {
 	GENERATED_SINGLETON(CCircleMemberDatabase)
 
 public:
 	void LoadDatas();
+	inline bool ProcessCommand(const shared_ptr<CmdBase>& InViewPtr)
+	{
+		if (InViewPtr)
+		{
+			return InViewPtr->Process();
+		}
+		return false;
+	}
 
 	inline const CircleMemberDataKeyList& GetCircleMemberDataKeyList() const 
 	{ 
@@ -119,5 +151,7 @@ private:
 	CircleMemberDataMapWithDate MemberDataMap;
 	CircleMemberDataHistoryList MemberHistoryList;
 	CircleMemberDataKeyList MemberDataKeyList;
+
+	const static string folderPath;
 };
 

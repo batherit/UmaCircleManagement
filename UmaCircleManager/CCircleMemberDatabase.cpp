@@ -1,12 +1,14 @@
 #include "CCircleMemberDatabase.h"
 #include "CToolBox.h"
 
+const string CCircleMemberDatabase::folderPath = ".\\CircleMemberDatabase\\";
+
 void CCircleMemberDatabase::LoadDatas()
 {
 	ClearDatas();
 
 	// create data map
-	string folderPath(".\\CircleMemberDatabase\\");
+	//string folderPath(".\\CircleMemberDatabase\\");
 
     _finddata_t fd;
 
@@ -91,4 +93,12 @@ void CCircleMemberDatabase::LoadDatas()
 			MemberHistoryList.push_back(memberHistory);
 		}
 	}
+}
+
+// cmd
+bool CmdChangeCircleMemberName::Process()
+{
+
+
+    return false;
 }

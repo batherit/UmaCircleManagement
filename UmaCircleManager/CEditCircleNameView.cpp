@@ -1,6 +1,7 @@
 #include "CEditCircleNameView.h"
 #include "CInputManager.h"
 #include "CViewManager.h"
+#include "CCircleMemberDatabase.h"
 
 void CEditCircleNameView::OnOpen()
 {
@@ -24,6 +25,8 @@ bool CEditCircleNameView::UpdateView()
 	if (isOk == "Y" || isOk == "y")
 	{
 		// TODO : change src name to dest name
+		CCircleMemberDatabase::Get().ProcessCommand(make_shared<CmdChangeCircleMemberName>(srcName, destName));
+
 		CViewManager::Get().ClearView();
 		cout << "Completed." << endl;
 		CViewManager::Get().PauseView();
