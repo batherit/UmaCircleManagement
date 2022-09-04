@@ -11,6 +11,7 @@
 #include<map>
 #include<set>
 #include<list>
+#include<stack>
 #include<string>
 #include<Windows.h>
 #include<io.h>

@@ -53,6 +53,12 @@
     <ClCompile Include="CAnalysisView.cpp">
       <Filter>소스 파일\App\View</Filter>
     </ClCompile>
+    <ClCompile Include="CEditView.cpp">
+      <Filter>소스 파일\App\View</Filter>
+    </ClCompile>
+    <ClCompile Include="CEditCircleNameView.cpp">
+      <Filter>소스 파일\App\View</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCircleMemberDatabase.h">
@@ -87,6 +93,12 @@
     </ClInclude>
     <ClInclude Include="..\Common\ServerProto.h">
       <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CEditView.h">
+      <Filter>소스 파일\App\View</Filter>
+    </ClInclude>
+    <ClInclude Include="CEditCircleNameView.h">
+      <Filter>소스 파일\App\View</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

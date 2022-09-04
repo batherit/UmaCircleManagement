@@ -2,8 +2,7 @@
 #include "CView.h"
 #include "CCircleMemberDatabase.h"
 
-class CAnalysisView :
-    public CView
+class CAnalysisView : public CView
 {
 public:
     virtual void OnOpen() override;

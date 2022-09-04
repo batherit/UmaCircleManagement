@@ -144,6 +144,8 @@
     <ClCompile Include="CAnalysisView.cpp" />
     <ClCompile Include="CCircleMemberData.cpp" />
     <ClCompile Include="CCircleMemberDatabase.cpp" />
+    <ClCompile Include="CEditCircleNameView.cpp" />
+    <ClCompile Include="CEditView.cpp" />
     <ClCompile Include="CInputManager.cpp" />
     <ClCompile Include="CMainView.cpp" />
     <ClCompile Include="CManager.cpp" />
@@ -158,6 +160,8 @@
     <ClInclude Include="CAnalysisView.h" />
     <ClInclude Include="CCircleMemberData.h" />
     <ClInclude Include="CCircleMemberDatabase.h" />
+    <ClInclude Include="CEditCircleNameView.h" />
+    <ClInclude Include="CEditView.h" />
     <ClInclude Include="CInputManager.h" />
     <ClInclude Include="CMainView.h" />
     <ClInclude Include="CManager.h" />

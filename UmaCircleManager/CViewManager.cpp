@@ -14,9 +14,39 @@ void CViewManager::SetNextView(const shared_ptr<CView>& InViewPtr)
 {
 	if (InViewPtr)
 	{
-		if(ViewPtr)
+		ClearView();
+
+		if (ViewPtr)
+		{
 			ViewPtr->OnClose();
+			StackedViews.push(ViewPtr);
+		}
+
 		ViewPtr = InViewPtr;
+
 		ViewPtr->OnOpen();
 	}
+}
+
+void CViewManager::ClearView() const
+{
+	system("cls");
+}
+
+void CViewManager::PauseView() const
+{
+	system("pause");
+}
+
+bool CViewManager::BackView()
+{
+	if (StackedViews.empty())
+		return false;
+
+	const shared_ptr<CView> topViewPtr = StackedViews.top();
+	StackedViews.pop();
+
+	SetNextView(topViewPtr);
+
+	return true;
 }

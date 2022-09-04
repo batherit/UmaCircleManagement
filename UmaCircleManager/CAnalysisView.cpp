@@ -7,8 +7,6 @@
 void CAnalysisView::OnOpen()
 {
 	CView::OnOpen();
-
-	system("cls");
 }
 
 bool CAnalysisView::UpdateView()
