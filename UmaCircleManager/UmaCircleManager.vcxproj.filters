@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\InputManager">
+      <UniqueIdentifier>{6ad327e5-055d-4443-b042-ed7028f283a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\App">
+      <UniqueIdentifier>{f97283a0-f859-4d99-889c-af04d52bc460}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\App\View">
+      <UniqueIdentifier>{a3679002-5deb-4cb2-a3b6-7835b30ced8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\App\Manager">
+      <UniqueIdentifier>{4012bc4c-2df2-4e4c-8764-4c75a2e6d21a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CCircleMemberDatabase.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CCircleMemberData.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CUmaCircleManagementSystem.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CInputManager.cpp">
+      <Filter>소스 파일\InputManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CView.cpp">
+      <Filter>소스 파일\App\View</Filter>
+    </ClCompile>
+    <ClCompile Include="CMainView.cpp">
+      <Filter>소스 파일\App\View</Filter>
+    </ClCompile>
+    <ClCompile Include="CViewManager.cpp">
+      <Filter>소스 파일\App\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CManager.cpp">
+      <Filter>소스 파일\App\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CAnalysisView.cpp">
+      <Filter>소스 파일\App\View</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CCircleMemberDatabase.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CCircleMemberData.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CUmaCircleManagementSystem.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CInputManager.h">
+      <Filter>소스 파일\InputManager</Filter>
+    </ClInclude>
+    <ClInclude Include="CView.h">
+      <Filter>소스 파일\App\View</Filter>
+    </ClInclude>
+    <ClInclude Include="CMainView.h">
+      <Filter>소스 파일\App\View</Filter>
+    </ClInclude>
+    <ClInclude Include="CViewManager.h">
+      <Filter>소스 파일\App\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="CManager.h">
+      <Filter>소스 파일\App\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="CAnalysisView.h">
+      <Filter>소스 파일\App\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\ServerProto.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
