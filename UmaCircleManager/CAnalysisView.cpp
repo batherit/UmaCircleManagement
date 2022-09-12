@@ -12,9 +12,9 @@ void CAnalysisView::OnOpen()
 bool CAnalysisView::UpdateView()
 {
 	const CCircleMemberDatabase& databaseInst = CCircleMemberDatabase::Get();
-	const CircleMemberDataKeyList& keyList = databaseInst.GetCircleMemberDataKeyList();
+	const CircleMemberDataKeySet& keySet = databaseInst.GetCircleMemberDataKeySet();
 	
-	for (const auto& key : keyList)
+	for (const auto& key : keySet)
 	{
 		CircleMemberDataHistory memberHistory;
 		if (!databaseInst.GetCircleMemberHistory(key, memberHistory))

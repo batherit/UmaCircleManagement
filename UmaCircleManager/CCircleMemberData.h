@@ -7,6 +7,10 @@ class CCircleMemberData
 public:
 	CCircleMemberData()
 	{}
+	explicit CCircleMemberData(const string& InMemberName)
+		:
+		MemberName(InMemberName)
+	{}
 	CCircleMemberData(const string& InMemberName, int InFanNumber)
 		:
 		MemberName(InMemberName),
@@ -19,10 +23,16 @@ public:
 	inline bool operator==(const CCircleMemberData& InData) const
 	{
 		if (IsValid() && InData.IsValid())
-			return MemberName == InData.MemberName;
+			return operator==(InData.GetMemberName());
 		else
 			return false;
 	}
+
+	inline bool operator==(const string& InMemberName) const
+	{
+		return MemberName == InMemberName;
+	}
+
 	inline bool operator<(const CCircleMemberData& InData) const
 	{
 		if(IsValid() && InData.IsValid())

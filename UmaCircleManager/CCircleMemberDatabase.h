@@ -3,7 +3,8 @@
 #include "Common.h"
 #include "CCircleMemberData.h"
 
-using CircleMemberDataKeyList = set<CCircleMemberData>;
+using CircleMemberDataKey = CCircleMemberData;
+using CircleMemberDataKeySet = set<CircleMemberDataKey>;
 using CircleMemberDataList = vector<CCircleMemberData>;
 using CircleMemberDataWithDate = pair<FileDate, CCircleMemberData>;
 using CircleMemberDataHistory = map<FileDate, CCircleMemberData>;
@@ -24,9 +25,7 @@ public:
 		:
 		SrcName(InSrcName),
 		DestName(InDestName)
-	{
-
-	}
+	{}
 
 	virtual bool Process() override;
 
@@ -39,20 +38,22 @@ class CCircleMemberDatabase
 {
 	GENERATED_SINGLETON(CCircleMemberDatabase)
 
+	friend CmdChangeCircleMemberName;
+
 public:
 	void LoadDatas();
-	inline bool ProcessCommand(const shared_ptr<CmdBase>& InViewPtr)
+	inline bool ProcessCommand(const shared_ptr<CmdBase>& InCmdPtr)
 	{
-		if (InViewPtr)
+		if (InCmdPtr)
 		{
-			return InViewPtr->Process();
+			return InCmdPtr->Process();
 		}
 		return false;
 	}
 
-	inline const CircleMemberDataKeyList& GetCircleMemberDataKeyList() const 
+	inline const CircleMemberDataKeySet& GetCircleMemberDataKeySet() const 
 	{ 
-		return MemberDataKeyList;
+		return MemberDataKeySet;
 	}
 
 	inline const CircleMemberDataHistoryList& GetCircleMemberDataHistoryList() const
@@ -139,19 +140,27 @@ public:
 		return false;
 	}
 
+
+
 private:
+	void CreateMemberHistoryList();
+
 	inline void ClearDatas()
 	{
 		MemberDataMap.clear();
 		MemberHistoryList.clear();
-		MemberDataKeyList.clear();
+		MemberDataKeySet.clear();
 	}
 
 private:
-	CircleMemberDataMapWithDate MemberDataMap;
-	CircleMemberDataHistoryList MemberHistoryList;
-	CircleMemberDataKeyList MemberDataKeyList;
-
+	// static
 	const static string folderPath;
+
+	// based
+	CircleMemberDataMapWithDate MemberDataMap;
+
+	// derived
+	CircleMemberDataKeySet MemberDataKeySet;
+	CircleMemberDataHistoryList MemberHistoryList;
 };
 

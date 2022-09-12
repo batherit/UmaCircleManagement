@@ -1,14 +1,12 @@
 #include "CCircleMemberDatabase.h"
 #include "CToolBox.h"
+#include "CInputManager.h"
 
 const string CCircleMemberDatabase::folderPath = ".\\CircleMemberDatabase\\";
 
 void CCircleMemberDatabase::LoadDatas()
 {
 	ClearDatas();
-
-	// create data map
-	//string folderPath(".\\CircleMemberDatabase\\");
 
     _finddata_t fd;
 
@@ -23,7 +21,7 @@ void CCircleMemberDatabase::LoadDatas()
         {
             if (!(fd.attrib & FILE_ATTRIBUTE_DIRECTORY))
             {
-                const string fileName = fd.name;
+                const string fileName = fd.name; // Ex fileName : 20220815.txt
                 ifstream fileStream(folderPath + fileName);
                 if (!fileStream)
                 {
@@ -57,48 +55,109 @@ void CCircleMemberDatabase::LoadDatas()
         // map은 기본적으로 오름차순 정렬.
     }
 
+    CreateMemberHistoryList();
+}
 
-	// create member history list
+void CCircleMemberDatabase::CreateMemberHistoryList()
+{
+    MemberDataKeySet.clear();
+    MemberHistoryList.clear();
 
-	FileDate fileDate;
-	CircleMemberDataList circleMemberDataList;
-	CircleMemberDataMapWithDate circleMemberDataMap;
-	if (GetCircleMembersInfoByLatestDate(fileDate, circleMemberDataList))
-	{
-		do {
-			circleMemberDataMap[fileDate] = circleMemberDataList;
-		} while (GetCircleMembersInfoByPreDate(fileDate, fileDate, circleMemberDataList));
+    if (MemberDataMap.empty())
+    {
+        cout << "Can't create member history list because member data map is empty." << endl;
+        return;
+    }
 
-		for (const auto& circleMemberDataWithDate : circleMemberDataMap)
-		{
-			MemberDataKeyList.insert(circleMemberDataWithDate.second.begin(), circleMemberDataWithDate.second.end());
-		}
+    FileDate fileDate;
+    CircleMemberDataList circleMemberDataList;
+    CircleMemberDataMapWithDate circleMemberDataMap;
+    if (GetCircleMembersInfoByLatestDate(fileDate, circleMemberDataList))
+    {
+        do {
+            circleMemberDataMap[fileDate] = circleMemberDataList;
+        } while (GetCircleMembersInfoByPreDate(fileDate, fileDate, circleMemberDataList));
 
-		for (const auto& memberDataKey : MemberDataKeyList)
-		{
-			CircleMemberDataHistory memberHistory;
-			for (const auto& circleMemberDataWithDate : circleMemberDataMap)
-			{
-				const auto& iter = find(circleMemberDataWithDate.second.begin(), circleMemberDataWithDate.second.end(), memberDataKey);
+        for (const auto& circleMemberDataWithDate : circleMemberDataMap)
+        {
+            MemberDataKeySet.insert(circleMemberDataWithDate.second.begin(), circleMemberDataWithDate.second.end());
+        }
 
-				if (iter != circleMemberDataWithDate.second.end())
-				{
-					memberHistory[circleMemberDataWithDate.first] = *iter;
-				}
-				else
-				{
-					memberHistory[circleMemberDataWithDate.first] = CCircleMemberData();
-				}
-			}
-			MemberHistoryList.push_back(memberHistory);
-		}
-	}
+        for (const auto& memberDataKey : MemberDataKeySet)
+        {
+            CircleMemberDataHistory memberHistory;
+            for (const auto& circleMemberDataWithDate : circleMemberDataMap)
+            {
+                const auto& iter = find(circleMemberDataWithDate.second.begin(), circleMemberDataWithDate.second.end(), memberDataKey);
+
+                if (iter != circleMemberDataWithDate.second.end())
+                {
+                    memberHistory[circleMemberDataWithDate.first] = *iter;
+                }
+                else
+                {
+                    memberHistory[circleMemberDataWithDate.first] = CCircleMemberData();
+                }
+            }
+            MemberHistoryList.push_back(memberHistory);
+        }
+    }
 }
 
 // cmd
 bool CmdChangeCircleMemberName::Process()
 {
+    CCircleMemberDatabase& dataBaseInst = CCircleMemberDatabase::Get();
 
+    for (auto& circleMemberDataWithDate : dataBaseInst.MemberDataMap)
+    {
+        const auto& beginIter = circleMemberDataWithDate.second.begin();
+        const auto& endIter = circleMemberDataWithDate.second.end();
+        const auto& srcIter = find(beginIter, endIter, SrcName);
+        const auto& destIter = find(beginIter, endIter, DestName);
 
-    return false;
+        if (srcIter != endIter && destIter != endIter)
+        {
+            cout << "[Collision]" << endl;
+            cout << "The src fan number of " << srcIter->GetMemberName() << " is " << srcIter->GetFanNumber() << "." << endl;
+            cout << "The dest fan number of " << destIter->GetMemberName() << " is " << destIter->GetFanNumber() << "." << endl;
+            cout << "What fan number data will you merge into? (src/dest) :";
+
+            while (true)
+            {
+                CInputManager::Get().ProcessInput();
+                const string& inputString = CInputManager::Get().GetInputString();
+
+                if (inputString == "src")
+                {
+                    const CCircleMemberData memberData = CCircleMemberData(DestName, srcIter->GetFanNumber());
+                    circleMemberDataWithDate.second.erase(srcIter);
+                    circleMemberDataWithDate.second.push_back(memberData);
+                    break;
+                }
+                else if (inputString == "dest")
+                {
+                    const CCircleMemberData memberData = CCircleMemberData(DestName, destIter->GetFanNumber());
+                    circleMemberDataWithDate.second.erase(srcIter);
+                    circleMemberDataWithDate.second.push_back(memberData);
+                    break;
+                }
+                else
+                {
+                    cout << "Please re-enter. (src/dest) : " << endl;
+                }
+            }
+            
+        }
+        else if (srcIter != endIter)
+        {
+            const CCircleMemberData memberData = CCircleMemberData(DestName, srcIter->GetFanNumber());
+            circleMemberDataWithDate.second.erase(srcIter);
+            circleMemberDataWithDate.second.push_back(memberData);
+        }
+    }
+
+    dataBaseInst.CreateMemberHistoryList();
+
+    return true;
 }

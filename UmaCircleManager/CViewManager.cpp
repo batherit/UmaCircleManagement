@@ -18,7 +18,6 @@ void CViewManager::SetNextView(const shared_ptr<CView>& InViewPtr)
 
 		if (ViewPtr)
 		{
-			ViewPtr->OnClose();
 			StackedViews.push(ViewPtr);
 		}
 
@@ -46,7 +45,14 @@ bool CViewManager::BackView()
 	const shared_ptr<CView> topViewPtr = StackedViews.top();
 	StackedViews.pop();
 
-	SetNextView(topViewPtr);
+	ClearView();
+
+	if (ViewPtr)
+	{
+		ViewPtr->OnClose();
+	}
+
+	ViewPtr = topViewPtr;
 
 	return true;
 }

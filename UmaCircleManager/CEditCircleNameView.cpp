@@ -10,15 +10,15 @@ void CEditCircleNameView::OnOpen()
 
 bool CEditCircleNameView::UpdateView()
 {
-	cout << "Input src name : " << endl;
+	cout << "Input src name : ";
 	CInputManager::Get().ProcessInput();
 	const string srcName = CInputManager::Get().GetInputString();
 
-	cout << "Input dest name : " << endl;
+	cout << "Input dest name : ";
 	CInputManager::Get().ProcessInput();
 	const string destName = CInputManager::Get().GetInputString();
 
-	cout << "The command will change the source name to the dead name. Do you agree? (Y/N) : " << endl;
+	cout << "Do you agree to change? (y/n) : ";
 	CInputManager::Get().ProcessInput();
 	const string isOk = CInputManager::Get().GetInputString();
 
@@ -32,20 +32,18 @@ bool CEditCircleNameView::UpdateView()
 		CViewManager::Get().PauseView();
 		CViewManager::Get().ClearView();
 	}
+
+	cout << "1. Continue / 2. Back" << endl;
+	CInputManager::Get().ProcessInput();
+	const string input = CInputManager::Get().GetInputString();
+
+	if (input == "Continue" || input == "1")
+	{
+		CViewManager::Get().ClearView();
+	}
 	else
 	{
-		cout << "1. Continue / 2. Back" << endl;
-		CInputManager::Get().ProcessInput();
-		const string input = CInputManager::Get().GetInputString();
-
-		if (input == "Continue" || input == "1")
-		{
-			CViewManager::Get().ClearView();
-		}
-		else
-		{
-			return CViewManager::Get().BackView();
-		}
+		return CViewManager::Get().BackView();
 	}
 
 	return true;
